@@ -11,8 +11,8 @@
     <scrollview ref="scrollV">
       <sideBar :open="isDrawerOpen" @change="updateDrawer">
         
-        <RadListView for="order in orders" pullToRefresh="true" @pullToRefreshInitiated="onPullToRefreshInitiated" @itemTap="orderTap" :style="{'height': listViewHeight}">
-          <ListViewGridLayout v-tkListViewLayout scrollDirection="Vertical" itemHeight="200" spanCount="1" itemInsertAnimation="Slide" />
+        <RadListView for="order in orders" pullToRefresh="true" @pullToRefreshInitiated="onPullToRefreshInitiated" @itemTap="orderTap" style="height: 400;">
+          <ListViewGridLayout v-tkListViewLayout scrollDirection="Vertical" spanCount="1" itemInsertAnimation="Slide" />
 
           <v-template>
             <GridLayout class="list-group-item" rows="auto" columns="100, *">
@@ -26,11 +26,13 @@
 
         </RadListView>
 
-        <StackLayout :style="{'height': bottomPanelHeight}">
+        <StackLayout>
           <Label :text="'Sub-Total: R' + totalAmount" />
           <Label :text="'VAT @ (0%): R0.00'" />
           <Label :text="'Total: R' + totalAmount" />
         </StackLayout>
+
+        <Button text="Checkout" style="background-color: orange; color: white;" />
         
       </sideBar>
     </scrollview>
@@ -45,6 +47,7 @@ export default {
   name: "products",
   data() {
     return {
+      isDrawerOpen: false,
       orders: [],
       listViewHeight: 400,
       bottomPanelHeight: 200
@@ -62,7 +65,7 @@ export default {
   methods: {
     loaded: function() {
       let THIS = this;
-      this.fixLayouts();
+      // this.fixLayouts();
       this.orders = this.$store.state.orders;
     },
     fixLayouts: function() {
