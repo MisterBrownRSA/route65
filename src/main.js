@@ -23,29 +23,33 @@ const store = new Vuex.Store({
 Vue.prototype.$store = store;
 
 var firebase = require("nativescript-plugin-firebase");
-firebase.init().then(
-  function(instance) {
-    console.log("firebase init");
+firebase
+  .init({
+    // persist: false
+  })
+  .then(
+    function(instance) {
+      console.log("firebase init");
 
-    let categoriesCollection = firebase.firestore
-      .collection("categories")
-      .get()
-      .then(querySnapshot => {
-        let categories = [];
-        querySnapshot.forEach(doc => {
-          // console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
-          categories.push(doc.data().name);
+      let categoriesCollection = firebase.firestore
+        .collection("categories")
+        .get()
+        .then(querySnapshot => {
+          let categories = [];
+          querySnapshot.forEach(doc => {
+            // console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+            categories.push(doc.data().name);
+          });
+          let product = {
+            categories: categories
+          };
+          store.commit("updateModel", { product: product });
         });
-        let product = {
-          categories: categories
-        };
-        store.commit("updateModel", { product: product });
-      });
-  },
-  function(error) {
-    console.log("firebase error");
-  }
-);
+    },
+    function(error) {
+      console.log("firebase error");
+    }
+  );
 
 Vue.prototype.$firebase = firebase;
 

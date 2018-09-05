@@ -4,19 +4,19 @@
       <StackLayout orientation="horizontal" ref="actionBar">
         <Label class="fa" :text="'fa-bars' | fonticon" width="20%" style="font-size: 22;" @tap="isDrawerOpen = !isDrawerOpen" />
         <Label text="Route 65" width="60%" />
-        <Label text="" width="20%" />
+x        <Label class="fa" :text="'fa-shopping-basket' | fonticon | concat(' ') | concat($store.state.orders.length)" width="20%" style="font-size: 22;" @tap="goToOrders" />
       </StackLayout>
     </ActionBar>
 
     <scrollview ref="scrollV">
-      <sideBar :open="isDrawerOpen" @change="updateDrawer">
-      </sideBar>
+      <h-sideBar :open="isDrawerOpen" @change="updateDrawer" :key="'home'">
+      </h-sideBar>
     </scrollview>
   </Page>
 </template>
 
 <script>
-import specials from "./specials";
+import orders from "./orders";
 
 import sideBar from "./partials/sideBar";
 
@@ -25,7 +25,6 @@ export default {
   data() {
     return {
       isDrawerOpen: false,
-
       name: "",
       description: "",
       cost_price: "",
@@ -38,10 +37,14 @@ export default {
     updateDrawer: function(value) {
       this.isDrawerOpen = value;
     },
-    loaded: function() {}
+    loaded: function() {},
+    goToOrders: function() {
+      console.log("click go to orders");
+      this.$navigateTo(ordersPage);
+    }
   },
   components: {
-    sideBar: sideBar
+    "h-sideBar": sideBar
   }
 };
 </script>
