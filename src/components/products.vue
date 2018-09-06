@@ -35,21 +35,29 @@ export default {
   methods: {
     loaded: function() {
       let THIS = this;
-      let productsCollection = this.$firebase.firestore.collection("products");
-      // console.log(THIS.products);
 
-      productsCollection
-        .get()
-        .then(querySnapshot => {
-          return querySnapshot.forEach(doc => {
-            THIS.products.push(doc.data());
-            return this;
-            // console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+      if ($store.state.products.length <= 0) {
+        let productsCollection = this.$firebase.firestore.collection(
+          "products"
+        );
+        // console.log(THIS.products);
+
+        productsCollection
+          .get()
+          .then(querySnapshot => {
+            return querySnapshot.forEach(doc => {
+              THIS.products.push(doc.data());
+              return this;
+              // console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
+            });
+          })
+          .then(data => {
+            // console.log(THIS.products);
           });
-        })
-        .then(data => {
-          // console.log(THIS.products);
-        });
+      } else {
+        // this.site = Object.assign({}, site);
+        this.products = this.$store.state.products;
+      }
     },
     productTap: function(event) {
       // console.log(event.index);

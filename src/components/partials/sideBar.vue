@@ -9,6 +9,7 @@
                     <Label class="fa" :text="'fa-lemon' | fonticon | concat(' Products')" @tap="goToProducts" />
                     <Label class="fa" :text="'fa-plus' | fonticon | concat(' Product Add')" @tap="goToProductAdd" />
                     <Label class="fa" :text="'fa-dollar-sign' | fonticon | concat(' Specials')" @tap="goToSpecials" />
+                    <Label class="fa" :text="'fa-plus' | fonticon | concat(' Special Add')" @tap="goToSpecialAdd" />
                 </StackLayout>
                 <StackLayout height="56">
                     <Label text="Close" color="lightgray" padding="10" style="horizontal-align: center" @tap="onCloseDrawerTap" />
@@ -26,6 +27,7 @@
 import products from "../products";
 import product_add from "../product_add";
 import specials from "../specials";
+import special_add from "../special_add";
 
 export default {
   name: "sideBar",
@@ -57,6 +59,9 @@ export default {
     },
     goToSpecials: function() {
       this.$navigateTo(specials);
+    },
+    goToSpecialAdd: function() {
+      this.$navigateTo(special_add);
     },
     onOpenDrawerTap() {
       this.$refs.drawer.nativeView.showDrawer();

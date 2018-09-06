@@ -73,7 +73,7 @@ export default {
     },
     loaded: function() {
       let THIS = this;
-      THIS.categories = THIS.$store.state.product.categories;
+      THIS.categories = THIS.$store.state.categories;
     }
   },
   components: {

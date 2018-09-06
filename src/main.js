@@ -4,9 +4,8 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 let initialState = {
-  product: {
-    categories: []
-  },
+  products: [],
+  categories: [],
   orders: []
 };
 
@@ -40,11 +39,19 @@ firebase
             // console.log(`${doc.id} => ${JSON.stringify(doc.data())}`);
             categories.push(doc.data().name);
           });
-          let product = {
-            categories: categories
-          };
-          store.commit("updateModel", { product: product });
+          store.commit("updateModel", { categories: categories });
         });
+
+      let productsCollection = firebase.firestore.collection("products");
+
+      productsCollection.get().then(querySnapshot => {
+        let products = [];
+        querySnapshot.forEach(doc => {
+          products.push(doc.data());
+          products[products.length - 1]["id"] = doc.id;
+        });
+        store.commit("updateModel", { products: products });
+      });
     },
     function(error) {
       console.log("firebase error");
@@ -81,6 +88,7 @@ import products from "./components/products";
 import product_add from "./components/product_add";
 import orders from "./components/orders";
 import specials from "./components/specials";
+import special_add from "./components/special_add";
 
 import "./styles.scss";
 
